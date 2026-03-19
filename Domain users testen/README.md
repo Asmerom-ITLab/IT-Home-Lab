@@ -41,48 +41,6 @@ NTFS permissions gecontroleerd en gecorrigeerd per afdeling.
 
 ---
 
-## Screenshots
-
-### 1 — Login scherm met hr-user1
-![Login scherm](screenshots/55-hr-login.png)
-
-Ingelogd als LAB\hr-user1 op Windows 10 client.
-Dit bewijst dat domein gebruikers kunnen inloggen op clients.
-
----
-
-### 2 — whoami /groups output
-![whoami groups](screenshots/56-whoami.png)
-
-Output van whoami /groups toont dat hr-user1 lid is van LAB\HR-Groep.
-Dit bewijst dat Active Directory groepslidmaatschap correct werkt.
-
----
-
-### 3 — HR map toegang
-![HR toegang](screenshots/57-hr-toegang.png)
-
-HR map opent zonder problemen voor hr-user1.
-De NTFS permissions geven HR-Groep volledige toegang tot deze map.
-
----
-
-### 4 — IT map geblokkeerd
-![IT geblokkeerd](screenshots/58-it-geblokkeerd.png)
-
-Toegang geweigerd bij de IT map voor hr-user1.
-Dit bewijst dat NTFS permissions correct werken per afdeling.
-
----
-
-### 5 — LastLogonDate controle op server
-![LastLogon](screenshots/59-lastlogon.png)
-
-Get-ADUser toont de laatste inlogtijd van hr-user1.
-Dit bewijst dat de domein login correct is geregistreerd in AD.
-
----
-
 ## Wat ik heb geleerd
 
 - Hoe domein gebruikers inloggen op een Windows client
@@ -90,3 +48,17 @@ Dit bewijst dat de domein login correct is geregistreerd in AD.
 - Het verschil tussen SMB share permissions en NTFS permissions
 - Hoe je permissions corrigeert via Advanced Security Settings
 - Hoe je toegang test vanuit een domein gebruiker perspectief
+
+---
+
+## Screenshots
+
+Zie de `screenshots/` map voor bewijs van elke stap.
+
+| Screenshot | Wat je ziet |
+|---|---|
+| 55-hr-login.png | Login scherm met LAB\hr-user1 |
+| 56-whoami.png | whoami /groups — hr-user1 lid van HR-Groep |
+| 57-hr-toegang.png | HR map opent voor hr-user1 |
+| 58-it-geblokkeerd.png | Toegang geweigerd bij IT map |
+| 59-lastlogon.png | Get-ADUser LastLogonDate van hr-user1 |

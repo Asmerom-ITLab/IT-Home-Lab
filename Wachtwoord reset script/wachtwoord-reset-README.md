@@ -58,25 +58,6 @@ Write-Host "===== KLAAR =====" -ForegroundColor Cyan
 
 ---
 
-## Screenshots
-
-### 1 — Script uitvoeren
-![Script output](screenshots/60-wachtwoord-reset.png)
-
-Output van het wachtwoord reset script na uitvoeren.
-Toont bevestiging dat het wachtwoord is gereset voor hr-user1.
-
----
-
-### 2 — Nieuw wachtwoord vereist op client
-![Nieuw wachtwoord](screenshots/61-nieuw-wachtwoord.png)
-
-Windows vraagt automatisch om een nieuw wachtwoord bij de
-volgende login van hr-user1. Dit bewijst dat de instelling
-ChangePasswordAtLogon correct werkt.
-
----
-
 ## Vereisten
 
 - PowerShell als Administrator uitvoeren
@@ -91,3 +72,14 @@ ChangePasswordAtLogon correct werkt.
 - Hoe je gebruikers verplicht een nieuw wachtwoord in te stellen
 - Hoe je gebruikersinvoer verwerkt in PowerShell
 - Hoe je foutafhandeling toepast bij niet bestaande gebruikers
+
+---
+
+## Screenshots
+
+Zie de `screenshots/` map voor bewijs van elke stap.
+
+| Screenshot | Wat je ziet |
+|---|---|
+| 60-wachtwoord-reset.png | Script output na uitvoeren voor hr-user1 |
+| 61-nieuw-wachtwoord.png | Windows vraagt nieuw wachtwoord bij volgende login |

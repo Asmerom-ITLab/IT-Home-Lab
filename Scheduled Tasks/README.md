@@ -36,33 +36,6 @@ vaste tijden zonder handmatige tussenkomst.
 
 ---
 
-## Screenshots
-
-### 1 — Task Scheduler met beide taken
-![Task Scheduler](screenshots/62-task-scheduler.png)
-
-Task Scheduler toont beide automatische taken.
-Dagelijks Systeem Rapport en Wekelijkse Inactieve Gebruikers Check
-zijn aangemaakt en actief.
-
----
-
-### 2 — Get-ScheduledTask output
-![Task status](screenshots/63-task-status.png)
-
-PowerShell output van Get-ScheduledTask toont beide taken
-met status Ready — klaar om uitgevoerd te worden.
-
----
-
-### 3 — Taak resultaat na uitvoeren
-![Task resultaat](screenshots/64-task-result.png)
-
-Get-ScheduledTaskInfo toont LastTaskResult 0 — dit betekent
-dat de taak succesvol is uitgevoerd zonder fouten.
-
----
-
 ## Waarom Scheduled Tasks belangrijk zijn
 
 In een bedrijfsomgeving moeten veel taken automatisch worden
@@ -81,4 +54,16 @@ uitgevoerd zonder handmatige tussenkomst:
 - Hoe je PowerShell scripts automatisch laat uitvoeren
 - Hoe je taken test en het resultaat controleert
 - Het belang van automatisering in IT beheer
-- Hoe je LastTaskResult interpreteert
+- Hoe je LastTaskResult 0 interpreteert als succes
+
+---
+
+## Screenshots
+
+Zie de `screenshots/` map voor bewijs van elke stap.
+
+| Screenshot | Wat je ziet |
+|---|---|
+| 62-task-scheduler.png | Task Scheduler met beide taken aangemaakt |
+| 63-task-status.png | Get-ScheduledTask — beide taken status Ready |
+| 64-task-result.png | Get-ScheduledTaskInfo — LastTaskResult 0 succesvol |
