@@ -1,13 +1,13 @@
 # Chocolatey Lab — Setup
 
 Stap voor stap uitleg van hoe ik Chocolatey heb geinstalleerd
-en geconfigureerd op Windows Server 2025.
+op Windows Server 2025, Windows 10 en Windows 11.
 
 ---
 
-## Stap 1 — Chocolatey installeren
+## Stap 1 — Chocolatey installeren op Windows Server
 
-Open PowerShell als Administrator op Windows Server:
+Open PowerShell als Administrator op Windows Server 2025:
 
 ```powershell
 Set-ExecutionPolicy Bypass -Scope Process -Force
@@ -15,7 +15,7 @@ Set-ExecutionPolicy Bypass -Scope Process -Force
 iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
 ```
 
-Controleren of installatie gelukt is:
+Versie controleren:
 
 ```powershell
 choco --version
@@ -23,16 +23,10 @@ choco --version
 
 ---
 
-## Stap 2 — Software installeren
+## Stap 2 — Software installeren op server
 
 ```powershell
-# 7-Zip installeren
-choco install 7zip -y
-
-# Notepad++ installeren
-choco install notepadplusplus -y
-
-# Meerdere tegelijk installeren
+# Meerdere pakketten tegelijk installeren
 choco install 7zip notepadplusplus googlechrome vlc -y
 ```
 
@@ -46,21 +40,17 @@ choco list
 
 ---
 
-## Stap 4 — Software updaten
+## Stap 4 — Alle software updaten
 
 ```powershell
-# Alle software updaten
 choco upgrade all -y
-
-# Specifieke software updaten
-choco upgrade 7zip -y
 ```
 
 ---
 
-## Stap 5 — Chocolatey op Windows 10 client installeren
+## Stap 5 — Chocolatey installeren op Windows 10 client
 
-Op Windows 10 VM via PowerShell als Administrator:
+Op Windows 10 VM open PowerShell als Administrator:
 
 ```powershell
 Set-ExecutionPolicy Bypass -Scope Process -Force
@@ -68,24 +58,71 @@ Set-ExecutionPolicy Bypass -Scope Process -Force
 iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
 ```
 
----
-
-## Stap 6 — Software uitrollen via PowerShell script
-
-Script aangemaakt om software op meerdere machines te installeren:
+Test installatie:
 
 ```powershell
-# software-uitrollen.ps1
-$software = @("7zip", "notepadplusplus", "googlechrome", "vlc")
-
-foreach ($pakket in $software) {
-    Write-Host "Installeren: $pakket" -ForegroundColor Cyan
-    choco install $pakket -y
-    Write-Host "Klaar: $pakket" -ForegroundColor Green
-}
-
-Write-Host "Alle software geinstalleerd!" -ForegroundColor Green
+choco install 7zip -y
+choco list
 ```
+
+---
+
+## Stap 6 — Netwerk probleem oplossen op Windows 11
+
+Voor de installatie op Windows 11 was de Default Gateway verkeerd
+ingesteld op 192.168.100.1 in plaats van 192.168.100.2.
+
+Opgelost via:
+
+```powershell
+# Oud IP verwijderen
+Remove-NetIPAddress -InterfaceAlias "Ethernet0" -Confirm:$false
+Remove-NetRoute -InterfaceAlias "Ethernet0" -DestinationPrefix 0.0.0.0/0 -Confirm:$false
+
+# Correct IP instellen
+New-NetIPAddress -InterfaceAlias "Ethernet0" `
+  -IPAddress 192.168.100.13 `
+  -PrefixLength 24 `
+  -DefaultGateway 192.168.100.2
+
+# DNS instellen
+Set-DnsClientServerAddress -InterfaceAlias "Ethernet0" `
+  -ServerAddresses 192.168.100.10
+```
+
+Daarna internet getest:
+
+```powershell
+ping 8.8.8.8
+```
+
+---
+
+## Stap 7 — Chocolatey installeren op Windows 11 client
+
+Na het oplossen van het netwerk probleem:
+
+```powershell
+Set-ExecutionPolicy Bypass -Scope Process -Force
+[System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072
+iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
+```
+
+Test installatie:
+
+```powershell
+choco install 7zip -y
+choco list
+```
+
+---
+
+## Resultaat
+
+Chocolatey succesvol geinstalleerd op alle drie de machines:
+- Windows Server 2025 — 4 pakketten geinstalleerd
+- Windows 10 Client — getest met 7zip
+- Windows 11 Client — getest met 7zip
 
 ---
 
@@ -94,5 +131,5 @@ Write-Host "Alle software geinstalleerd!" -ForegroundColor Green
 - Hoe Chocolatey werkt als package manager voor Windows
 - Hoe je software installeert via de command line
 - Hoe je software up to date houdt via choco upgrade
-- Hoe je software uitrolt naar meerdere machines via PowerShell
+- Hoe je netwerk problemen oplost op een domein client
 - Het belang van geautomatiseerde software installatie in IT

@@ -1,7 +1,8 @@
 # Chocolatey Lab
 
-Chocolatey package manager geinstalleerd op Windows Server 2025.
-Software automatisch geinstalleerd en beheerd via PowerShell.
+Chocolatey package manager geinstalleerd op Windows Server 2025,
+Windows 10 en Windows 11. Software automatisch geinstalleerd
+en beheerd via PowerShell.
 
 ---
 
@@ -21,7 +22,8 @@ meerdere computers tegelijk te installeren en up to date te houden.
 | Onderdeel | Details |
 |-----------|---------|
 | Server | Windows Server 2025 — DC01 |
-| Clients | Windows 10 en Windows 11 |
+| Client 1 | Windows 10 — 192.168.100.12 |
+| Client 2 | Windows 11 — 192.168.100.13 |
 | Tool | Chocolatey + PowerShell |
 
 ---
@@ -31,13 +33,24 @@ meerdere computers tegelijk te installeren en up to date te houden.
 - Chocolatey geinstalleerd op Windows Server 2025
 - Software geinstalleerd via choco install commando
 - Geinstalleerde software bekeken via choco list
-- Software geupdate via choco upgrade
+- Software geupdate via choco upgrade all
 - Chocolatey geinstalleerd op Windows 10 client
-- Software uitgerold naar client via PowerShell script
+- Chocolatey geinstalleerd op Windows 11 client
+- Software getest op alle drie de machines
 
 ---
 
-## Software geinstalleerd via Chocolatey
+## Chocolatey installatie per machine
+
+| Machine | Chocolatey | Software getest |
+|---|---|---|
+| Windows Server 2025 | ✅ Geinstalleerd | 7zip, Notepad++, Chrome, VLC |
+| Windows 10 Client | ✅ Geinstalleerd | 7zip |
+| Windows 11 Client | ✅ Geinstalleerd | 7zip |
+
+---
+
+## Software geinstalleerd via Chocolatey op server
 
 | Software | Commando |
 |---|---|
@@ -55,6 +68,7 @@ meerdere computers tegelijk te installeren en up to date te houden.
 - Hoe je software up to date houdt via choco upgrade
 - Hoe je software uitrolt naar meerdere machines via PowerShell
 - Het belang van geautomatiseerde software installatie in IT
+- Hoe je netwerk problemen oplost op een domein client
 
 ---
 
@@ -64,8 +78,10 @@ Zie de `screenshots/` map voor bewijs van elke stap.
 
 | Screenshot | Wat je ziet |
 |---|---|
-| 70-chocolatey-install.png | Chocolatey installatie voltooid |
-| 71-choco-install-software.png | Software installatie via choco |
-| 72-choco-list.png | Geinstalleerde software lijst |
-| 73-choco-upgrade.png | Software update via choco upgrade |
-| 74-choco-client.png | Chocolatey op Windows 10 client |
+| 71-chocolatey-install.png | Chocolatey installatie voltooid op server |
+| 72-choco-install-software.png | Software installatie via choco op server |
+| 73-choco-list.png | Geinstalleerde software lijst op server |
+| 74-choco-upgrade.png | Software update via choco upgrade all |
+| 75-choco-client.png | Chocolatey geinstalleerd op Windows 10 |
+| 76-choco-win11.png | Chocolatey versie op Windows 11 |
+| 77-choco-win11-software.png | choco list op Windows 11 |

@@ -27,8 +27,6 @@ choco install 7zip -y
 choco install notepadplusplus -y
 choco install googlechrome -y
 choco install vlc -y
-choco install vscode -y
-choco install git -y
 
 # Meerdere tegelijk installeren
 choco install 7zip notepadplusplus googlechrome vlc -y
@@ -63,12 +61,34 @@ choco search notepad
 
 ---
 
+## Netwerk troubleshooting Windows 11
+
+```powershell
+# Internet testen
+ping 8.8.8.8
+
+# IP configuratie bekijken
+ipconfig /all
+
+# Gateway corrigeren
+Remove-NetIPAddress -InterfaceAlias "Ethernet0" -Confirm:$false
+Remove-NetRoute -InterfaceAlias "Ethernet0" -DestinationPrefix 0.0.0.0/0 -Confirm:$false
+
+New-NetIPAddress -InterfaceAlias "Ethernet0" `
+  -IPAddress 192.168.100.13 `
+  -PrefixLength 24 `
+  -DefaultGateway 192.168.100.2
+
+Set-DnsClientServerAddress -InterfaceAlias "Ethernet0" `
+  -ServerAddresses 192.168.100.10
+```
+
+---
+
 ## Automatisering script
 
 ```powershell
 # software-uitrollen.ps1
-# Vereist: Chocolatey geinstalleerd, PowerShell als Administrator
-
 $software = @(
     "7zip",
     "notepadplusplus",
@@ -109,6 +129,6 @@ choco config set cacheLocation "C:\ChocolateyCache"
 # Timeout instellen
 choco config set commandExecutionTimeoutSeconds 300
 
-# Chocolatey updaten
+# Chocolatey zelf updaten
 choco upgrade chocolatey -y
 ```
