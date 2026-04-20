@@ -44,6 +44,7 @@ WireGuard VPN Tunnel: 10.0.0.0/24
   Windows10 → 10.0.0.5
   Windows11 → 10.0.0.6
 ```
+<img width="1536" height="1024" alt="image" src="https://github.com/user-attachments/assets/2928f90a-3325-4d37-baa0-f4a89c34252d" />
 
 ---
 
