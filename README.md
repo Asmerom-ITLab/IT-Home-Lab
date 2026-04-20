@@ -219,7 +219,7 @@ in een lokale VMware omgeving en gedocumenteerd zoals in een echte IT afdeling.
 ---
 
 **Auteur:** Asmerom
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-0A66C2?style=flat&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/asmerom-m-aa6709294)
-[![GitHub Lab](https://img.shields.io/badge/IT_Home_Lab-181717?style=flat&logo=github&logoColor=white)](https://github.com/Asmerom-ITLab/IT-Home-Lab)
-**Status:** In ontwikkeling
-**Laatste update:** april 2026
+-[![LinkedIn](https://img.shields.io/badge/LinkedIn-0A66C2?style=flat&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/asmerom-m-aa6709294)
+-[![GitHub Lab](https://img.shields.io/badge/IT_Home_Lab-181717?style=flat&logo=github&logoColor=white)](https://github.com/Asmerom-ITLab/IT-Home-Lab)
+-**Status:** In ontwikkeling
+-**Laatste update:** april 2026
