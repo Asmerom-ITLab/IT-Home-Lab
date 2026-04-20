@@ -1,100 +1,136 @@
-# IT Home Lab Portfolio
+# IT Home Lab Portfolio — Asmerom
 
-Hands-on IT labs uitgevoerd in VMware Workstation op een lokale pc.
-Gericht op de vaardigheden die junior system administrators dagelijks
-gebruiken in een bedrijfsomgeving.
+Welkom bij mijn IT Home Lab portfolio! Dit lab is volledig gebouwd in VMware Workstation
+op een lokale pc. Alle labs zijn echt uitgevoerd en gedocumenteerd met screenshots als bewijs.
+
+Het doel van dit lab is om de vaardigheden te laten zien die nodig zijn voor een
+functie als **Junior IT System Enigneer**.
 
 ---
 
-## Infrastructuur
+## Netwerk Topologie
 
 ```
-INTERNET
-    |
-[VMware NAT — 192.168.100.2]
-    |
-    +------ [192.168.100.10] Windows Server 2025 — DC01
-    |        Active Directory | DNS | DHCP | File Server | GPO | Backup
-    |
-    +------ [192.168.100.11] Windows Server 2025 — DC02
-    |        Tweede Domain Controller | AD Replicatie
-    |
-    +------ [192.168.100.20] Ubuntu Server 24.04 LTS
-    |        Apache | SSH | Zabbix Monitoring
-    |
-    +------ [192.168.100.12] Windows 10 — Client 1
-    +------ [192.168.100.13] Windows 11 — Client 2
-             Beide gejoined aan lab.local
+                        INTERNET
+                           |
+                    [VMware NAT]
+                    192.168.100.2
+                           |
+                    +------+------+
+                    |   pfSense   |
+                    |  Firewall   |
+                    +------+------+
+                           |
+          +----------------+----------------+
+          |                |                |
+    [VMnet2]          [VMnet3]         [VMnet8]
+  Beheer LAN       Intern Netwerk       NAT WAN
+192.168.200.0/24  192.168.50.0/24
+          |                |
+          |       +--------+---------+----------+----------+
+          |       |        |         |          |          |
+          |    [DC01]   [DC02]   [Ubuntu]  [Win10]   [Win11]
+          |    .50.10   .50.11    .50.20    DHCP      DHCP
+          |
+    [RHEL-WAZUH-01]
+      192.168.100.50
+      Wazuh SIEM
+
+WireGuard VPN Tunnel: 10.0.0.0/24
+  pfSense  → 10.0.0.1
+  DC01     → 10.0.0.2
+  DC02     → 10.0.0.3
+  Ubuntu   → 10.0.0.4
+  Windows10 → 10.0.0.5
+  Windows11 → 10.0.0.6
 ```
 
 ---
 
-## Systeem Labs
+## Overzicht van alle machines
 
-| Lab | Status | Beschrijving |
-|---|---|---|
-| ActiveDirectory-Lab | ✅ Klaar | AD DS, DNS, DHCP, 20 gebruikers, 5 groepen |
-| Tweede-DC-Lab | ✅ Klaar | Tweede Domain Controller, AD replicatie |
-| FileServer-Lab | ✅ Klaar | SMB shares, NTFS permissions per afdeling |
-| Group-Policy-Lab | ✅ Klaar | GPO wachtwoord, bureaublad, USB blokkeren |
-| Backup-Lab | ✅ Klaar | Windows Server Backup, bestand herstel |
-| Domain-Users-Lab | ✅ Klaar | Domein login testen, NTFS permissions |
-| PowerShell-Scripts | ✅ Klaar | Systeem rapport, inactieve gebruikers, wachtwoord reset |
-
----
-
-## Netwerk Labs
-
-| Lab | Status | Beschrijving |
-|---|---|---|
-| Network-Lab | ✅ Klaar | VMware NAT, subnetting, IP adressering |
-| Windows-Update-GPO-Lab | ✅ Klaar | Windows Update via Group Policy |
-| pfSense-Lab | 📋 Gepland | Firewall configuratie |
-| WireGuard-VPN | 📋 Gepland | VPN server opzetten |
+| Machine | IP adres | Rol | OS |
+|---|---|---|---|
+| pfSense | 192.168.50.1 | Firewall en router | pfSense 2.7 |
+| DC01 | 192.168.50.10 | Primaire Domain Controller | Windows Server 2025 |
+| DC02 | 192.168.50.11 | Secundaire Domain Controller | Windows Server 2025 |
+| Ubuntu Server | 192.168.50.20 | Linux server | Ubuntu 24.04 LTS |
+| Windows 10 | DHCP | Client | Windows 10 |
+| Windows 11 | DHCP | Client | Windows 11 |
+| RHEL-WAZUH-01 | 192.168.100.50 | Wazuh SIEM server | RHEL 9 |
 
 ---
 
-## Security Labs
+## Labs overzicht
 
-| Lab | Status | Beschrijving |
+### Systeem Labs
+
+| Lab | Beschrijving | Status |
 |---|---|---|
-| Windows-Security-Lab | ✅ Klaar | Defender, Firewall, Security rapport |
-| Wazuh-SIEM-Lab | 🔄 Bezig | SIEM monitoring, security alerts |
+| Active Directory | AD DS, DNS, DHCP, 20 gebruikers, 5 groepen | Klaar |
+| Tweede DC | DC02 gepromoveerd, AD replicatie, DHCP failover | Klaar |
+| File Server | SMB shares, NTFS permissions per afdeling | Klaar |
+| Group Policy | Wachtwoord, bureaublad, USB, Windows Update GPO | Klaar |
+| Backup en Restore | Windows Server Backup, bestand herstel | Klaar |
+| Domain Users | Domein login testen, NTFS permissions | Klaar |
+| Remote Desktop Services | RDS rol, Session Collection, gebruikers toegang | Klaar |
+| Print Server | Virtuele printer, SMB share, GPO uitrollen | Klaar |
+| Certificate Authority | Enterprise Root CA, certificaat templates | Klaar |
+| PowerShell Scripts | Systeem rapport, inactieve gebruikers, wachtwoord reset | Klaar |
+| Scheduled Tasks | Automatische taken via Task Scheduler | Klaar |
+| Windows Security | Defender, Firewall, Security rapport | Klaar |
+| WSUS | Windows Update beheer via WSUS server | Klaar |
+
+### Netwerk Labs
+
+| Lab | Beschrijving | Status |
+|---|---|---|
+| Network Lab | VMware NAT, subnetting, IP adressering | Klaar |
+| pfSense Firewall | Firewall, NAT, centrale gateway | Klaar |
+| pfSense VLANs | IT, HR en Management VLAN segmenten | Klaar |
+| WireGuard VPN | VPN tunnel op alle apparaten | Klaar |
+| Windows Update GPO | Automatische updates via Group Policy | Klaar |
+
+### Security Labs
+
+| Lab | Beschrijving | Status |
+|---|---|---|
+| Windows Security | Microsoft Defender, Firewall configuratie | Klaar |
+| Wazuh SIEM | SIEM monitoring op RHEL 9, 5 agents | Klaar |
+| File Integrity Monitoring | Bestandswijzigingen detecteren via Wazuh | Klaar |
+| Brute Force detectie | Aanvallen detecteren via Wazuh | Klaar |
+| Security Compliance | CIS benchmark, GDPR, PCI DSS | Klaar |
+
+### Linux Labs
+
+| Lab | Beschrijving | Status |
+|---|---|---|
+| Linux Server | Ubuntu, Apache, SSH, UFW firewall | Klaar |
+| Zabbix Monitoring | Monitoring, CPU en disk alerts, dashboard | Klaar |
+
+### Infra Labs
+
+| Lab | Beschrijving | Status |
+|---|---|---|
+| Chocolatey | Package management op 3 machines | Klaar |
+| Scheduled Tasks | Automatische taken via Task Scheduler | Klaar |
+| Wachtwoord Reset | AD wachtwoord reset via PowerShell | Klaar |
 
 ---
 
-## Linux Labs
+## Opgeloste problemen
 
-| Lab | Status | Beschrijving |
+Tijdens het bouwen van dit lab zijn er technische problemen opgelost.
+Dit laat zien dat ik problemen kan analyseren en oplossen.
+
+| Probleem | Oorzaak | Oplossing |
 |---|---|---|
-| Linux-Server-Lab | ✅ Klaar | Ubuntu, Apache, SSH, UFW firewall |
-| Monitoring-Lab | ✅ Klaar | Zabbix monitoring, dashboards, agents |
-
----
-
-## Infra Labs
-
-| Lab | Status | Beschrijving |
-|---|---|---|
-| Chocolatey-Lab | ✅ Klaar | Package management, software deployment |
-| Scheduled-Tasks-Lab | ✅ Klaar | Automatische taken via Task Scheduler |
-| Wachtwoord-Reset-Script | ✅ Klaar | AD wachtwoord reset via PowerShell |
-
----
-
-## Omgeving
-
-| Onderdeel | Details |
-|-----------|---------|
-| Hypervisor | VMware Workstation |
-| Primaire DC | Windows Server 2025 — DC01 — 192.168.100.10 |
-| Secundaire DC | Windows Server 2025 — DC02 — 192.168.100.11 |
-| Linux Server | Ubuntu Server 24.04 LTS — 192.168.100.20 |
-| Client 1 | Windows 10 — 192.168.100.12 |
-| Client 2 | Windows 11 — 192.168.100.13 |
-| Netwerk | VMware NAT — 192.168.100.0/24 |
-| Domein | lab.local |
-| Gebruikers | 20 gebruikers in 5 afdelingen |
+| DC02 promotie mislukt | Kloon had AD database conflict | Schone Windows Server installatie |
+| WSUS SQL timeout | Te weinig RAM voor database | SQL timeout verhoogd naar 7200 seconden |
+| Snort niet compatibel | pfSense 2.7 libcrypto conflict | Gedocumenteerd, Wazuh gebruikt als alternatief |
+| Ubuntu geen internet | VMware VMnet3 ARP conflict | ARP cache geleegd en route gereset |
+| Wazuh dashboard fout | YAML configuratie fout | Configuratie handmatig gecorrigeerd |
+| pfSense geen bereik | VMnet3 host adapter actief | VMware host adapter uitgevinkt |
 
 ---
 
@@ -106,13 +142,15 @@ INTERNET
 | Directory service | Active Directory Domain Services |
 | Server OS | Windows Server 2025 |
 | Client OS | Windows 10, Windows 11 |
-| Linux | Ubuntu Server 24.04 LTS |
+| Linux | Ubuntu Server 24.04 LTS, RHEL 9 |
 | Web server | Apache2 |
-| Remote access | SSH |
+| Remote access | SSH, RDP, WireGuard VPN |
 | Monitoring | Zabbix 6.4 |
-| Security | Microsoft Defender, Windows Firewall |
+| SIEM | Wazuh 4.7.5 |
+| Security | Microsoft Defender, Windows Firewall, pfSense |
 | Package management | Chocolatey |
 | Scripting | PowerShell |
+| Firewall | pfSense 2.7 |
 | Versie beheer | Git / GitHub |
 
 ---
@@ -128,9 +166,17 @@ IT-Home-Lab/
 │   ├── Group-Policy-Lab/
 │   ├── Backup-Lab/
 │   ├── Domain-Users-Lab/
-│   └── PowerShell-Scripts/
+│   ├── RDS-Lab/
+│   ├── Print-Server-Lab/
+│   ├── Certificate-Authority-Lab/
+│   ├── PowerShell-Scripts/
+│   ├── Scheduled-Tasks-Lab/
+│   ├── Windows-Security-Lab/
+│   └── WSUS-Lab/
 ├── Netwerk/
 │   ├── Network-Lab/
+│   ├── pfSense-Lab/
+│   ├── WireGuard-VPN-Lab/
 │   └── Windows-Update-GPO-Lab/
 ├── Security/
 │   ├── Windows-Security-Lab/
@@ -142,20 +188,37 @@ IT-Home-Lab/
 │   ├── Chocolatey-Lab/
 │   ├── Scheduled-Tasks-Lab/
 │   └── Wachtwoord-Reset-Script/
-└── README.md
+└── Documentation/
+    ├── netwerk-diagram.png
+    ├── bekende-problemen.md
+    └── home-lab-overview.md
 ```
+
+---
+
+## Statistieken
+
+- **** hands-on labs voltooid
+- **195+** screenshots als bewijs
+- **5** PowerShell automatisering scripts
+- **2** Domain Controllers met replicatie en failover
+- **3** VLANs geconfigureerd in pfSense
+- **5** Wazuh agents actief
+- **1** WireGuard VPN tunnel op alle apparaten
+- **1** Certificate Authority voor eigen SSL certificaten
 
 ---
 
 ## Doel
 
-Dit portfolio is opgebouwd als onderdeel van mijn ontwikkeling
-als Junior System Administrator. Alle labs zijn praktisch uitgevoerd
-in een lokale VMware omgeving en gedocumenteerd zoals in een echte
-IT-afdeling.
+Dit portfolio is gebouwd als onderdeel van mijn ontwikkeling als
+**Junior IT System Engineer**. Alle labs zijn echt uitgevoerd
+in een lokale VMware omgeving en gedocumenteerd zoals in een echte IT afdeling.
 
 ---
 
 **Auteur:** Asmerom
+**LinkedIn:** https://www.linkedin.com/in/asmerom-m-aa6709294
+**GitHub:** https://github.com/Asmerom-ITLab/IT-Home-Lab
 **Status:** In ontwikkeling
-**Laatste update:** maart 2026
+**Laatste update:** april 2026

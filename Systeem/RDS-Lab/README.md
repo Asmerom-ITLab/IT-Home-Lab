@@ -9,34 +9,33 @@ vanuit Windows 10 en Windows 11 clients.
 ## Omgeving
 
 | Onderdeel | Details |
-|-----------|---------|
-| Server | Windows Server 2025 — DC01 |
-| Domein | lab.local |
-| RDP Poort | 3389 |
+|---|---|
+| Server | DC01 — Windows Server 2025 |
+| RDP poort | 3389 |
 | Clients | Windows 10 en Windows 11 |
+| Toegang via | LAB\hr-user1 en andere domein gebruikers |
 
 ---
 
-## Wat ik heb gedaan
-
-- RDS rollen geinstalleerd op DC01
-- Remote Desktop Users groep geconfigureerd
-- Domein gebruikers toegevoegd aan Remote Desktop Users
-- Session Collection aangemaakt via Server Manager
-- Firewall regel ingeschakeld voor RDP
-- GPO aangemaakt voor Remote Desktop toegang
-- RDP verbinding getest vanaf Windows 10 client
-- Actieve sessies gecontroleerd via query session
-
----
-
-## RDS rollen geinstalleerd
+## Geinstalleerde RDS rollen
 
 | Rol | Functie |
 |---|---|
 | RDS-RD-Server | Remote Desktop Session Host |
 | RDS-Connection-Broker | Verbindingen beheren |
 | RDS-Web-Access | Web toegang tot Remote Desktop |
+
+---
+
+## Wat ik heb gedaan
+
+- RDS rollen geinstalleerd op DC01 via PowerShell
+- Domain Users groep toegevoegd aan Remote Desktop Users
+- Session Collection aangemaakt via Server Manager
+- Firewall regel ingeschakeld voor RDP poort 3389
+- GPO aangemaakt voor Remote Desktop toegang
+- RDP verbinding getest vanaf Windows 10 client
+- Actieve sessies gecontroleerd via query session
 
 ---
 
@@ -51,19 +50,25 @@ vanuit Windows 10 en Windows 11 clients.
 
 ---
 
+## Waarom RDS belangrijk is
+
+In een bedrijfsomgeving werken veel medewerkers op afstand via
+Remote Desktop. RDS maakt het mogelijk om centraal applicaties
+te beheren en gebruikers veilig toegang te geven.
+
+---
+
 ## Wat ik heb geleerd
 
 - Hoe Remote Desktop Services werkt op Windows Server
 - Hoe je gebruikers toegang geeft via RDP
 - Hoe je een Session Collection aanmaakt
 - Hoe je actieve RDP sessies controleert
-- Het belang van RDS in een bedrijfsomgeving voor thuiswerkers
+- Het belang van RDS voor thuiswerkers
 
 ---
 
 ## Screenshots
-
-Zie de `screenshots/` map voor bewijs van elke stap.
 
 | Screenshot | Wat je ziet |
 |---|---|

@@ -1,74 +1,54 @@
 # WireGuard VPN Lab
 
 WireGuard VPN geconfigureerd op pfSense als VPN server.
-Windows 10 client maakt veilig verbinding via VPN tunnel.
+Alle apparaten in het lab zijn verbonden via een VPN tunnel.
+Dit simuleert veilig werken op afstand.
 
 ---
 
 ## Omgeving
 
 | Onderdeel | Details |
-|-----------|---------|
-| VPN Server | pfSense — 192.168.200.1 |
-| VPN Port | UDP 51820 |
+|---|---|
+| VPN Server | pfSense — poort 51820 UDP |
 | VPN Subnet | 10.0.0.0/24 |
-| Server IP | 10.0.0.1 |
-| Client IP | 10.0.0.2 |
-| Client | Windows 10 |
+| Server VPN IP | 10.0.0.1 |
 
 ---
 
-## Netwerk diagram
+## VPN clients
 
-```
-Windows 10 Client
-[10.0.0.2]
-    |
-    | WireGuard VPN Tunnel
-    | UDP 51820
-    |
-[pfSense WireGuard]
-[10.0.0.1]
-    |
-[LAN — 192.168.200.0/24]
-    |
-[INTERNET]
-```
+| Apparaat | VPN IP | Status |
+|---|---|---|
+| DC01 | 10.0.0.2 | Actief |
+| DC02 | 10.0.0.3 | Actief |
+| Ubuntu | 10.0.0.4 | Actief |
+| Windows 10 | 10.0.0.5 | Actief |
+| Windows 11 | 10.0.0.6 | Actief |
 
 ---
 
 ## Wat ik heb gedaan
 
 - WireGuard package geinstalleerd op pfSense
-- pfSense bijgewerkt naar laatste versie
-- WireGuard tunnel aangemaakt op pfSense
-- Public en Private keys gegenereerd
-- Peer aangemaakt voor Windows 10 client
-- Firewall regel toegevoegd voor UDP poort 51820
-- WireGuard client geinstalleerd op Windows 10
-- VPN configuratie aangemaakt op Windows 10
-- Public keys uitgewisseld tussen server en client
+- VPN tunnel aangemaakt — Lab-VPN
+- Public en private keys gegenereerd
+- Peers aangemaakt voor alle apparaten
+- Firewall regel toegevoegd voor UDP 51820
+- WireGuard client geinstalleerd op alle Windows apparaten
+- WireGuard geinstalleerd op Ubuntu via apt
+- VPN configuratie aangemaakt op alle apparaten
+- Public keys uitgewisseld tussen server en clients
 - VPN verbinding getest — handshake succesvol
-- Ping naar VPN gateway getest
 
 ---
 
-## WireGuard configuratie
-
-**pfSense server:**
-
-| Instelling | Waarde |
-|---|---|
-| Tunnel naam | Lab-VPN |
-| Listen port | 51820 |
-| Server IP | 10.0.0.1/24 |
-
-**Windows 10 client:**
+## WireGuard client configuratie
 
 ```ini
 [Interface]
-Address = 10.0.0.2/24
-DNS = 10.0.0.1
+Address = 10.0.0.x/24
+DNS = 192.168.50.10
 
 [Peer]
 PublicKey = <pfSense public key>
@@ -85,42 +65,36 @@ PersistentKeepalive = 25
 |---|---|
 | WireGuard handshake | Succesvol |
 | Ping naar 10.0.0.1 | Werkt |
-| Data transfer | 3.21 KiB ontvangen |
-| VPN status | Active |
+| Alle clients actief | Werkt |
+| Data transfer | Werkt |
 
 ---
 
-## Waarom WireGuard VPN belangrijk is
+## Waarom WireGuard
 
-In een bedrijfsomgeving hebben medewerkers die thuis werken
-een veilige verbinding nodig naar het bedrijfsnetwerk.
-WireGuard is:
-- Sneller dan OpenVPN
-- Eenvoudiger te configureren
-- Moderner en veiliger
-- Ingebouwd in Linux kernel
+WireGuard is moderner en sneller dan OpenVPN. Het wordt gebruikt
+in bedrijven voor veilige verbindingen voor thuiswerkers.
 
 ---
 
 ## Wat ik heb geleerd
 
 - Hoe WireGuard VPN werkt
-- Hoe je public en private keys aanmaakt
-- Hoe je een VPN tunnel configureert op pfSense
-- Hoe je een VPN client instelt op Windows
-- Hoe je firewall regels maakt voor VPN verkeer
-- Het belang van VPN in een bedrijfsomgeving
+- Hoe public en private keys werken
+- Hoe je een VPN tunnel configureert
+- Hoe je meerdere clients verbindt via VPN
+- Het belang van VPN voor veilig werken op afstand
 
 ---
 
 ## Screenshots
 
-Zie de `screenshots/` map voor bewijs van elke stap.
-
 | Screenshot | Wat je ziet |
 |---|---|
-| 109-wireguard-install.png | WireGuard installatie op pfSense |
-| 110-wireguard-tunnel.png | WireGuard tunnel aangemaakt |
-| 111-wireguard-peer.png | Peer configuratie met public key |
-| 112-wireguard-connected.png | VPN status Active met handshake |
-| 113-wireguard-ping.png | Ping naar 10.0.0.1 succesvol |
+| 109-wireguard-install.png | WireGuard geinstalleerd op pfSense |
+| 110-wireguard-tunnel.png | VPN tunnel aangemaakt |
+| 111-wireguard-peer.png | Peers geconfigureerd |
+| 112-wireguard-connected.png | VPN actief met handshake |
+| 113-wireguard-ping.png | Ping naar 10.0.0.1 werkt |
+| 132-wireguard-alle-peers.png | Alle 5 peers in pfSense |
+| 138-wireguard-ubuntu.png | WireGuard actief op Ubuntu |

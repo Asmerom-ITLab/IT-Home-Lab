@@ -1,35 +1,33 @@
 # Certificate Authority Lab
 
-Active Directory Certificate Services geconfigureerd op
-Windows Server 2025. Eigen CA aangemaakt voor het uitgeven
-van SSL certificaten binnen het lab.local domein.
+Active Directory Certificate Services geconfigureerd op Windows Server 2025.
+Een eigen Certificate Authority is aangemaakt voor het uitgeven van
+SSL certificaten binnen het lab.local domein.
 
 ---
 
 ## Omgeving
 
 | Onderdeel | Details |
-|-----------|---------|
-| Server | Windows Server 2025 — DC01 |
+|---|---|
+| Server | DC01 — Windows Server 2025 |
 | CA naam | lab-CA |
 | CA type | Enterprise Root CA |
 | Geldigheid | 5 jaar |
-| Algoritme | SHA256 |
-| Key length | 2048 bit |
+| Algoritme | SHA256 — 2048 bit |
 
 ---
 
 ## Wat ik heb gedaan
 
 - AD CS rol geinstalleerd op DC01
-- Enterprise Root CA geconfigureerd
-- CA naam ingesteld op lab-CA
+- Enterprise Root CA geconfigureerd met naam lab-CA
 - Certificaat template aangemaakt — Lab Web Server
 - Certificaat aangevraagd voor DC01.lab.local
 - CA certificaat geëxporteerd naar C:\lab-CA.cer
-- GPO aangemaakt voor CA vertrouwen op alle clients
-- CA certificaat geïmporteerd via GPO
-- Certificaat gecontroleerd op Windows 10 client
+- GPO aangemaakt — CA Vertrouwen Beleid
+- CA certificaat geimporteerd via GPO
+- Certificaat vertrouwd op Windows 10 client gecontroleerd
 
 ---
 
@@ -42,7 +40,6 @@ van SSL certificaten binnen het lab.local domein.
 | Geldigheid | 5 jaar |
 | Hash algoritme | SHA256 |
 | Key length | 2048 bit |
-| Template | Lab Web Server |
 
 ---
 
@@ -63,10 +60,10 @@ van SSL certificaten binnen het lab.local domein.
 |---|---|
 | CA rol geinstalleerd | Werkt |
 | CA geconfigureerd | Werkt |
-| Certificaat template aangemaakt | Werkt |
+| Template aangemaakt | Werkt |
 | Certificaat aangevraagd | Werkt |
 | CA certificaat geëxporteerd | Werkt |
-| GPO aangemaakt voor CA vertrouwen | Werkt |
+| GPO voor CA vertrouwen | Werkt |
 | CA vertrouwd op Windows 10 | Werkt |
 
 ---
@@ -76,11 +73,10 @@ van SSL certificaten binnen het lab.local domein.
 In een bedrijfsomgeving worden SSL certificaten gebruikt voor:
 - Versleutelde verbindingen via HTTPS
 - Authenticatie van servers en gebruikers
-- Digitale handtekeningen
 - VPN verbindingen
+- Digitale handtekeningen
 
-Een eigen CA geeft volledige controle over certificaten
-zonder afhankelijk te zijn van externe partijen.
+Een eigen CA geeft volledige controle over certificaten.
 
 ---
 
@@ -97,12 +93,10 @@ zonder afhankelijk te zijn van externe partijen.
 
 ## Screenshots
 
-Zie de `screenshots/` map voor bewijs van elke stap.
-
 | Screenshot | Wat je ziet |
 |---|---|
 | 151-ca-role.png | AD CS rol geinstalleerd op DC01 |
 | 152-ca-configured.png | CA geconfigureerd — certsrv.msc |
 | 153-ca-template.png | Lab Web Server template aangemaakt |
 | 154-ca-certificate.png | Certificaat aangevraagd en uitgegeven |
-| 155-ca-gpo.png | CA certificaat geïmporteerd via GPO |
+| 155-ca-gpo.png | CA certificaat geimporteerd via GPO |

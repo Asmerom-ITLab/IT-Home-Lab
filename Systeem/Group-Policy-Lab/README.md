@@ -1,58 +1,62 @@
-# Group Policy Lab
+# Windows Update via GPO Lab
 
-Group Policy Objects (GPO) geconfigureerd in een Active Directory
-omgeving op Windows Server 2025.
+Windows Update geconfigureerd via Group Policy voor alle clients
+in het lab.local domein. Updates worden automatisch gedownload
+en geinstalleerd om 02:00 buiten werktijd.
 
 ---
 
 ## Omgeving
 
 | Onderdeel | Details |
-|-----------|---------|
-| Server | Windows Server 2025 — DC01 |
-| Domein | lab.local |
+|---|---|
+| Server | DC01 — Windows Server 2025 |
+| GPO naam | Windows Update Beleid |
 | Clients | Windows 10 en Windows 11 |
-| Tool | Group Policy Management Console (GPMC) |
+
+---
+
+## GPO instellingen
+
+| Policy | Instelling |
+|---|---|
+| Configure Automatic Updates | Enabled — Auto download and schedule |
+| Scheduled install time | 02:00 AM |
+| Scheduled install day | Every day |
+| No auto-restart with logged on users | Enabled |
 
 ---
 
 ## Wat ik heb gedaan
 
-- Group Policy Management Console geopend via gpmc.msc
-- Wachtwoordbeleid GPO aangemaakt en gekoppeld aan lab.local
-- Bureaubladbeleid GPO aangemaakt met vaste achtergrond
-- USB blokkeren GPO aangemaakt
-- Alle GPOs gekoppeld aan het domein
-- gpupdate /force uitgevoerd op clients
-- GPO toepassing gecontroleerd via gpresult /r
+- Nieuwe GPO aangemaakt — Windows Update Beleid
+- GPO gekoppeld aan lab.local domein
+- Automatische updates geconfigureerd via GPMC
+- Update tijdstip ingesteld op 02:00
+- Automatische herstart uitgeschakeld tijdens werktijd
+- GPO toegepast op Windows 10 en Windows 11 clients
+- Registry instellingen gecontroleerd op clients
+- Windows Update service gecontroleerd
 
 ---
 
-## GPOs aangemaakt
+## Testresultaten
 
-| GPO naam | Wat het doet |
+| Test | Resultaat |
 |---|---|
-| Wachtwoordbeleid | Wachtwoord vereisten instellen |
-| Bureaubladbeleid | Vaste achtergrond voor alle gebruikers |
-| USB-Blokkeren | USB opslag apparaten blokkeren |
+| GPO actief op clients | Werkt |
+| Registry instellingen correct | Werkt |
+| AUOptions waarde 4 | Werkt |
+| Geen herstart tijdens werktijd | Werkt |
 
 ---
 
-## Resultaat
+## Wat ik heb geleerd
 
-Alle drie de GPOs zijn succesvol aangemaakt, gekoppeld aan lab.local
-en toegepast op de Windows 10 en Windows 11 clients.
-
----
-
-## Vaardigheden
-
-- Group Policy Objects aanmaken en beheren
-- GPO koppelen aan een Active Directory domein
-- Registry waarden instellen via GPO
-- GPO toepassing controleren via gpresult
-- Domain security beheer
-- GPMC gebruiken
+- Hoe Windows Update gecentraliseerd beheerd wordt via GPO
+- Hoe je voorkomt dat updates tijdens werktijd worden geinstalleerd
+- Hoe je registry instellingen controleert voor GPO toepassing
+- Het belang van update beheer in een bedrijfsomgeving
 
 ---
 
@@ -60,7 +64,9 @@ en toegepast op de Windows 10 en Windows 11 clients.
 
 | Screenshot | Wat je ziet |
 |---|---|
-| 39-gpo-lijst.png | Get-GPO output met alle GPOs |
-| 40-gpmc.png | GPMC venster met GPOs |
-| 41-gpupdate.png | gpupdate /force output |
-| 42-gpresult.png | gpresult /r output |
+| 65-gpo-update-beleid.png | GPMC met Windows Update Beleid |
+| 66-gpo-update-settings.png | GPO instellingen geconfigureerd |
+| 67-gpo-no-restart.png | No auto-restart instelling |
+| 68-gpupdate-client.png | gpupdate /force op Windows 10 |
+| 69-gpresult.png | gpresult met Windows Update Beleid |
+| 70-update-registry.png | Registry instellingen op client |

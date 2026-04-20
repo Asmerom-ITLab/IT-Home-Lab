@@ -1,59 +1,65 @@
-# Backup & Restore Lab
+# Backup en Restore Lab
 
-Windows Server Backup geconfigureerd op Windows Server 2025.
-Backup gemaakt van de Shares map en een bestand succesvol hersteld.
+Windows Server Backup geconfigureerd op DC01 en DC02.
+Een dagelijks backup schema is ingesteld en een bestand is
+succesvol hersteld na verwijdering als bewijs.
 
 ---
 
 ## Omgeving
 
 | Onderdeel | Details |
-|-----------|---------|
-| Server | Windows Server 2025 — DC01 |
-| Tool | Windows Server Backup |
-| Backup bron | C:\Shares\ |
-| Backup doel | Lokale schijf C: |
+|---|---|
+| Server | DC01 en DC02 — Windows Server 2025 |
+| Backup tool | Windows Server Backup |
+| Backup schema | Dagelijks 02:00 |
+| Backup bron | C:\Shares |
 
 ---
 
 ## Wat ik heb gedaan
 
-- Windows Server Backup rol geinstalleerd
-- Testbestand aangemaakt in C:\Shares\IT\
-- Backup gemaakt via Windows Server Backup GUI
-- Testbestand verwijderd om restore te testen
-- Bestand succesvol hersteld uit backup
-- Resultaat gecontroleerd via PowerShell
+- Windows Server Backup rol geinstalleerd op DC01 en DC02
+- Dagelijks backup schema ingesteld op 02:00
+- Backup gemaakt van C:\Shares map
+- Testbestand aangemaakt in C:\Shares\IT
+- Testbestand verwijderd
+- Bestand succesvol hersteld via Windows Server Backup
+- DHCP Failover geconfigureerd tussen DC01 en DC02
+- DFS Replicatie ingesteld voor automatische synchronisatie
 
 ---
 
-## Resultaat
+## DC02 Redundancy
 
-Backup en restore werkt correct. Het testbestand is succesvol
-hersteld na het verwijderen.
-
----
-
-## Vaardigheden
-
-- Windows Server Backup installatie en configuratie
-- Backup strategie opzetten
-- Disaster Recovery procedures
-- Bestand herstel uit backup
-- wbadmin.msc gebruiken
+| Functie | Details |
+|---|---|
+| DHCP Failover | Load Balance 50/50 tussen DC01 en DC02 |
+| DFS Replicatie | C:\Shares gesynchroniseerd tussen DC01 en DC02 |
+| Backup schema | Dagelijks 02:00 op DC02 |
 
 ---
 
-## Waarom backup belangrijk is
+## Testresultaten
 
-In een bedrijfsomgeving kan data verloren gaan door:
-- Per ongeluk verwijderen van bestanden
-- Hardware storingen
-- Ransomware aanvallen
-- Menselijke fouten
+| Test | Resultaat |
+|---|---|
+| Backup aangemaakt | Werkt |
+| Bestand hersteld | Werkt |
+| DHCP failover | Werkt |
+| DFS replicatie | Werkt |
+| DC01 gestopt — DC02 neemt over | Werkt |
 
-Een goede backup strategie zorgt dat data altijd hersteld
-kan worden.
+---
+
+## Wat ik heb geleerd
+
+- Hoe Windows Server Backup werkt
+- Hoe je een backup schema instelt
+- Hoe je bestanden herstelt na verwijdering
+- Hoe DHCP Failover werkt tussen twee servers
+- Hoe DFS Replicatie bestanden synchroniseert
+- Het belang van redundantie en backup in een bedrijf
 
 ---
 
@@ -61,7 +67,9 @@ kan worden.
 
 | Screenshot | Wat je ziet |
 |---|---|
-| 43-backup-install.png | Windows Server Backup geinstalleerd |
-| 44-backup-completed.png | Backup succesvol voltooid |
-| 45-bestand-weg.png | Testbestand verwijderd |
-| 46-restore-gelukt.png | Bestand hersteld uit backup |
+| 29-backup-rol.png | Windows Server Backup geinstalleerd |
+| 30-backup-schema.png | Dagelijks backup schema ingesteld |
+| 31-backup-gemaakt.png | Backup succesvol aangemaakt |
+| 32-herstel.png | Bestand hersteld na verwijdering |
+| 121-dhcp-failover.png | DHCP Failover status Normal |
+| 122-dfs-replication.png | DFS Replicatie actief |

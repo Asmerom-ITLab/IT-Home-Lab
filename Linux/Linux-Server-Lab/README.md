@@ -1,74 +1,86 @@
 # Linux Server Lab
 
-Ubuntu Server 24.04 LTS opgezet als Linux server met Apache webserver,
-SSH toegang en Zabbix monitoring in een VMware Workstation omgeving.
+Ubuntu Server 24.04 LTS opgezet als Linux server in het lab.local netwerk.
+Apache webserver, SSH toegang en UFW firewall zijn geconfigureerd.
+Zabbix monitoring agent is geinstalleerd voor centrale monitoring.
 
 ---
 
 ## Omgeving
 
 | Onderdeel | Details |
-|-----------|---------|
-| Hypervisor | VMware Workstation |
-| Server OS | Ubuntu Server 24.04 LTS |
-| Server naam | ubuntu-server |
-| IP adres | 192.168.100.20 |
-| Netwerk | VMware NAT — 192.168.100.0/24 |
-| Gebruiker | admin |
+|---|---|
+| Server | Ubuntu Server 24.04 LTS |
+| IP adres | 192.168.50.20 |
+| Gebruiker | ubuntu |
+| SSH poort | 22 |
+| Apache | Poort 80 en 443 |
 
 ---
 
 ## Wat ik heb gedaan
 
-- Ubuntu Server 24.04 LTS VM aangemaakt in VMware
-- Systeem geupdate met apt update en apt upgrade
-- Statisch IP ingesteld op 192.168.100.20
-- Hostname ingesteld op ubuntu-server
-- SSH server geinstalleerd en geconfigureerd
-- Apache webserver geinstalleerd en getest
+- Ubuntu Server 24.04 LTS geinstalleerd
+- Statisch IP ingesteld via pfSense DHCP reservering
+- Apache webserver geinstalleerd en geconfigureerd
+- SSH ingeschakeld voor remote beheer
 - UFW firewall geconfigureerd
-- SSH verbinding getest vanuit Windows 10
 - Zabbix agent geinstalleerd en geconfigureerd
-- Server toegevoegd aan Zabbix monitoring dashboard
+- Wazuh agent geinstalleerd voor security monitoring
+- WireGuard VPN geconfigureerd
 
 ---
 
-## Resultaat
+## Firewall regels
 
-Na deze lab is de volgende infrastructuur operationeel:
-
-- Ubuntu Server op 192.168.100.20
-- SSH toegang via poort 22
-- Apache webserver bereikbaar via http://192.168.100.20
-- UFW firewall actief met SSH en Apache regels
-- Zabbix agent actief — server wordt gemonitord
+| Poort | Protocol | Gebruik |
+|---|---|---|
+| 22 | TCP | SSH toegang |
+| 80 | TCP | Apache HTTP |
+| 443 | TCP | Apache HTTPS |
+| 10050 | TCP | Zabbix agent |
+| 1514 | TCP | Wazuh agent |
 
 ---
 
-## Vaardigheden
+## Bekende problemen
 
-- Linux server installatie en configuratie
-- SSH configuratie en beheer
-- Apache webserver installatie
-- UFW firewall beheer
-- Zabbix agent configuratie
-- Linux commando's en bestandssysteem
-- Netwerk configuratie via Netplan
-- VMware VM configuratie
+Ubuntu had verbindingsproblemen via pfSense door een ARP conflict
+in VMware VMnet3. Oplossing: VMware host adapter uitgeschakeld voor VMnet3.
+
+---
+
+## Testresultaten
+
+| Test | Resultaat |
+|---|---|
+| SSH verbinding | Werkt |
+| Apache webserver | Werkt |
+| UFW firewall | Werkt |
+| Zabbix agent actief | Werkt |
+| Wazuh agent actief | Werkt |
+| WireGuard VPN | Werkt |
+| Internet verbinding | Werkt |
+
+---
+
+## Wat ik heb geleerd
+
+- Hoe Ubuntu Server geconfigureerd wordt
+- Hoe Apache webserver werkt op Linux
+- Hoe SSH remote beheer werkt
+- Hoe UFW firewall regels werkt
+- Hoe je een Zabbix agent installeert op Linux
+- Hoe je netplan configuratie bijwerkt
 
 ---
 
 ## Screenshots
 
-Zie de `screenshots/` map voor bewijs van elke stap.
-
 | Screenshot | Wat je ziet |
 |---|---|
-| 26-ubuntu-install.png | Ubuntu installatie scherm |
-| 27-ubuntu-login.png | Eerste login op Ubuntu |
-| 28-ubuntu-static-ip.png | Statisch IP ingesteld |
-| 29-apache-status.png | Apache actief |
-| 30-apache-browser.png | Apache pagina in browser |
-| 31-ssh-verbinding.png | SSH verbinding vanuit Windows |
-| 32-ufw-status.png | Firewall status |
-| 33-zabbix-agent.png | Zabbix agent actief |
+| 33-ubuntu-install.png | Ubuntu Server installatie |
+| 34-apache-actief.png | Apache webserver draait |
+| 35-ssh-verbinding.png | SSH verbinding succesvol |
+| 36-ufw-status.png | UFW firewall regels |
+| 37-zabbix-agent.png | Zabbix agent actief |

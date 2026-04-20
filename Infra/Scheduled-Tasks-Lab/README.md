@@ -1,27 +1,27 @@
 # Scheduled Tasks Lab
 
-Automatische taken geconfigureerd in Windows Server 2025 via
-Task Scheduler. PowerShell scripts draaien automatisch op
-vaste tijden zonder handmatige tussenkomst.
+PowerShell scripts automatisch laten draaien via Windows Task Scheduler
+op Windows Server 2025. Twee taken zijn geconfigureerd voor dagelijkse
+en wekelijkse automatisering.
 
 ---
 
 ## Omgeving
 
 | Onderdeel | Details |
-|-----------|---------|
-| Server | Windows Server 2025 — DC01 |
+|---|---|
+| Server | DC01 — Windows Server 2025 |
 | Tool | Task Scheduler |
-| Scripts | systeem-rapport.ps1, inactieve-gebruikers.ps1 |
+| Scripts | C:\Scripts\ |
 
 ---
 
-## Aangemakte taken
+## Geconfigureerde taken
 
 | Taaknaam | Schema | Tijd | Script |
 |---|---|---|---|
 | Dagelijks Systeem Rapport | Dagelijks | 08:00 | systeem-rapport.ps1 |
-| Wekelijkse Inactieve Gebruikers Check | Wekelijks — maandag | 09:00 | inactieve-gebruikers.ps1 |
+| Wekelijkse Inactieve Gebruikers Check | Wekelijks maandag | 09:00 | inactieve-gebruikers.ps1 |
 
 ---
 
@@ -29,22 +29,30 @@ vaste tijden zonder handmatige tussenkomst.
 
 - Task Scheduler geopend via Start menu
 - Twee nieuwe taken aangemaakt via Create Basic Task wizard
-- PowerShell script gekoppeld aan elke taak
+- PowerShell scripts gekoppeld aan elke taak
 - Taken handmatig getest via Start-ScheduledTask
-- Resultaat gecontroleerd via Get-ScheduledTaskInfo
-- Beide taken tonen LastTaskResult 0 — succesvol uitgevoerd
+- Resultaat gecontroleerd — LastTaskResult 0 betekent succes
+- Beide taken tonen LastTaskResult 0
 
 ---
 
-## Waarom Scheduled Tasks belangrijk zijn
+## Testresultaten
 
-In een bedrijfsomgeving moeten veel taken automatisch worden
-uitgevoerd zonder handmatige tussenkomst:
+| Test | Resultaat |
+|---|---|
+| Taak handmatig gestart | Werkt |
+| LastTaskResult 0 | Succesvol |
+| Script wordt uitgevoerd | Werkt |
 
-- Dagelijkse systeem rapporten voor de IT afdeling
-- Wekelijkse controle van inactieve gebruikers
-- Nachtelijke backups
-- Periodieke opruimtaken
+---
+
+## Wat LastTaskResult betekent
+
+| Waarde | Betekenis |
+|---|---|
+| 0 | Succesvol uitgevoerd |
+| 1 | Fout opgetreden |
+| 267009 | Taak wordt nog uitgevoerd |
 
 ---
 
@@ -54,16 +62,13 @@ uitgevoerd zonder handmatige tussenkomst:
 - Hoe je PowerShell scripts automatisch laat uitvoeren
 - Hoe je taken test en het resultaat controleert
 - Het belang van automatisering in IT beheer
-- Hoe je LastTaskResult 0 interpreteert als succes
 
 ---
 
 ## Screenshots
 
-Zie de `screenshots/` map voor bewijs van elke stap.
-
 | Screenshot | Wat je ziet |
 |---|---|
-| 62-task-scheduler.png | Task Scheduler met beide taken aangemaakt |
-| 63-task-status.png | Get-ScheduledTask — beide taken status Ready |
-| 64-task-result.png | Get-ScheduledTaskInfo — LastTaskResult 0 succesvol |
+| 62-task-scheduler.png | Task Scheduler met beide taken |
+| 63-task-status.png | Beide taken status Ready |
+| 64-task-result.png | LastTaskResult 0 — succesvol |

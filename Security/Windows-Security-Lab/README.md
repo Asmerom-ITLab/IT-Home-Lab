@@ -1,33 +1,22 @@
 # Windows Security Lab
 
-Microsoft Defender en Windows Firewall geconfigureerd en getest
-op Windows Server 2025. Security rapport gegenereerd via PowerShell.
+Microsoft Defender en Windows Firewall geconfigureerd op Windows Server 2025.
+Een PowerShell script genereert automatisch een security rapport met
+de status van Defender, Firewall en recente security events.
 
 ---
 
 ## Omgeving
 
 | Onderdeel | Details |
-|-----------|---------|
-| Server | Windows Server 2025 — DC01 |
-| Domein | lab.local |
+|---|---|
+| Server | DC01 — Windows Server 2025 |
 | Tool | Microsoft Defender, Windows Firewall, PowerShell |
+| Script | C:\Scripts\security-rapport.ps1 |
 
 ---
 
-## Wat ik heb gedaan
-
-- Microsoft Defender status gecontroleerd via PowerShell
-- Real-time beveiliging ingeschakeld op de server
-- Defender definities bijgewerkt
-- Quick scan uitgevoerd via PowerShell
-- Windows Firewall aangezet op alle profielen
-- Security event logs bekeken
-- PowerShell script gemaakt voor automatisch security rapport
-
----
-
-## Security status na configuratie
+## Security status
 
 | Instelling | Status |
 |---|---|
@@ -41,15 +30,37 @@ op Windows Server 2025. Security rapport gegenereerd via PowerShell.
 
 ---
 
-## PowerShell script
+## Wat ik heb gedaan
 
-Script aangemaakt: `C:\Scripts\security-rapport.ps1`
+- Microsoft Defender status gecontroleerd via PowerShell
+- Real-time beveiliging ingeschakeld
+- Defender definities bijgewerkt
+- Quick scan uitgevoerd via PowerShell
+- Windows Firewall aangezet op alle profielen
+- Security event logs bekeken
+- PowerShell script geschreven voor automatisch rapport
+- Script opgeslagen als C:\Scripts\security-rapport.ps1
+
+---
+
+## Security rapport script
 
 Het script genereert automatisch een rapport van:
 - Microsoft Defender status
 - Firewall status per profiel
-- Laatste 5 security event logs
+- Laatste 5 security events
 - Laatste geinstalleerde Windows updates
+
+---
+
+## Testresultaten
+
+| Test | Resultaat |
+|---|---|
+| Defender ingeschakeld | Werkt |
+| Quick scan uitgevoerd | Werkt |
+| Firewall alle profielen aan | Werkt |
+| Security rapport script | Werkt |
 
 ---
 
@@ -57,15 +68,13 @@ Het script genereert automatisch een rapport van:
 
 - Hoe Microsoft Defender geconfigureerd wordt via PowerShell
 - Hoe Windows Firewall profielen werken
-- Hoe je security event logs leest en interpreteert
-- Hoe je een automatisch security rapport maakt via PowerShell
+- Hoe je security event logs leest
+- Hoe je een automatisch security rapport maakt
 - Het belang van beveiliging op een Windows Server
 
 ---
 
 ## Screenshots
-
-Zie de `screenshots/` map voor bewijs van elke stap.
 
 | Screenshot | Wat je ziet |
 |---|---|
@@ -73,7 +82,6 @@ Zie de `screenshots/` map voor bewijs van elke stap.
 | 89-defender-settings.png | Real-time beveiliging ingeschakeld |
 | 90-defender-scan.png | Quick scan gestart |
 | 91-defender-update.png | Defender definities bijgewerkt |
-| 92-security-rapport.png | Volledig security rapport output |
+| 92-security-rapport.png | Security rapport output |
 | 93-event-logs.png | Security event logs |
 | 94-firewall-status.png | Firewall profielen actief |
-| 95-script-opgeslagen.png | Security rapport script output |

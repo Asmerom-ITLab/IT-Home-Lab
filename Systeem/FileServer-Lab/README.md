@@ -1,73 +1,64 @@
 # File Server Lab
 
-File server opgezet op Windows Server 2025 met gedeelde mappen
-per afdeling en NTFS toegangsrechten.
+File server opgezet op DC01 met 5 gedeelde mappen voor de 5 afdelingen.
+NTFS rechten zijn per afdeling ingesteld zodat medewerkers alleen bij
+hun eigen map kunnen.
 
 ---
 
 ## Omgeving
 
 | Onderdeel | Details |
-|-----------|---------|
-| Server | Windows Server 2025 — DC01 |
+|---|---|
+| Server | DC01 — Windows Server 2025 |
+| Shares pad | C:\Shares |
 | Domein | lab.local |
-| Pad | C:\Shares\ |
-| Gebruikers | 20 gebruikers in 5 afdelingen |
+
+---
+
+## Gedeelde mappen
+
+| Map | Share naam | Groep | Rechten |
+|---|---|---|---|
+| C:\Shares\HR | HR | HR-Groep | Volledig |
+| C:\Shares\IT | IT | IT-Groep | Volledig |
+| C:\Shares\Management | Management | Management-Groep | Volledig |
+| C:\Shares\Finance | Finance | Finance-Groep | Volledig |
+| C:\Shares\Sales | Sales | Sales-Groep | Volledig |
 
 ---
 
 ## Wat ik heb gedaan
 
-- 5 mappen aangemaakt onder C:\Shares\
-- Alle mappen gedeeld via SMB
-- 5 security groepen aangemaakt per afdeling
-- 20 gebruikers aangemaakt via PowerShell script
-- Gebruikers toegevoegd aan de juiste groepen
-- NTFS permissions ingesteld per afdeling
-- Toegang getest vanuit Windows 10 client
+- 5 mappen aangemaakt onder C:\Shares
+- SMB shares aangemaakt voor elke map
+- NTFS rechten ingesteld per afdeling via Advanced Security Settings
+- Everyone en Users verwijderd van alle mappen
+- Alleen de juiste groep toegang gegeven per map
+- Domain Admins volledige toegang gegeven op alle mappen
+- Toegang getest vanuit domein gebruiker perspectief
 
 ---
 
-## Mappen structuur
+## Testresultaten
 
-```
-C:\Shares\
-├── HR\         — alleen HR-Groep
-├── IT\         — alleen IT-Groep
-├── Management\ — alleen Management-Groep
-├── Finance\    — alleen Finance-Groep
-└── Sales\      — alleen Sales-Groep
-```
-
----
-
-## Gebruikers per afdeling
-
-| Afdeling | Groep | Gebruikers |
-|---|---|---|
-| HR | HR-Groep | hr-user1 t/m hr-user4 |
-| IT | IT-Groep | it-user1 t/m it-user4 |
-| Management | Management-Groep | mgmt-user1 t/m mgmt-user4 |
-| Finance | Finance-Groep | fin-user1 t/m fin-user4 |
-| Sales | Sales-Groep | sales-user1 t/m sales-user4 |
+| Test | Resultaat |
+|---|---|
+| hr-user1 bij HR map | Toegang |
+| hr-user1 bij IT map | Geblokkeerd |
+| it-user1 bij IT map | Toegang |
+| it-user1 bij HR map | Geblokkeerd |
+| Domain Admin bij alle mappen | Toegang |
 
 ---
 
-## Resultaat
+## Wat ik heb geleerd
 
-Alle 5 mappen zijn gedeeld via SMB en beveiligd met NTFS permissions.
-Elke afdeling heeft alleen toegang tot zijn eigen map.
-
----
-
-## Vaardigheden
-
-- File server configuratie op Windows Server
-- SMB shares aanmaken en beheren
-- NTFS permissions instellen
-- Active Directory security groepen
-- Toegangsbeheer per afdeling
-- PowerShell voor bulk gebruikers aanmaken
+- Hoe SMB shares werken op Windows Server
+- Het verschil tussen SMB en NTFS rechten
+- Hoe je rechten instelt via Advanced Security Settings
+- Hoe je toegang test vanuit een domein gebruiker
+- Het belang van correcte NTFS rechten voor beveiliging
 
 ---
 
@@ -75,8 +66,7 @@ Elke afdeling heeft alleen toegang tot zijn eigen map.
 
 | Screenshot | Wat je ziet |
 |---|---|
-| 19-shares.png | Get-SmbShare output |
-| 20-gebruikers.png | ADUC met gebruikers |
-| 21-groepen.png | ADUC met groepen |
-| 22-permissions.png | NTFS permissions ingesteld |
-| 23-fileshare-test.png | Toegang getest vanuit client |
+| 20-shares-aangemaakt.png | 5 gedeelde mappen in Server Manager |
+| 21-ntfs-rechten.png | NTFS rechten per map |
+| 22-hr-toegang.png | hr-user1 heeft toegang tot HR map |
+| 23-it-geblokkeerd.png | hr-user1 geblokkeerd bij IT map |

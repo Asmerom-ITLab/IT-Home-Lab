@@ -1,63 +1,88 @@
 # Active Directory Lab
 
-Windows Server 2025 ingericht als Domain Controller met Active Directory,
-DNS en DHCP in een VMware Workstation omgeving.
+Windows Server 2025 ingericht als Domain Controller voor het lab.local domein.
+Active Directory, DNS en DHCP zijn geconfigureerd. Er zijn 20 gebruikers
+aangemaakt verdeeld over 5 afdelingen.
 
 ---
 
 ## Omgeving
 
 | Onderdeel | Details |
-|-----------|---------|
-| Hypervisor | VMware Workstation |
-| Server OS | Windows Server 2025 |
-| Server naam | DC01 |
-| IP adres | 192.168.100.10 |
+|---|---|
+| Server | DC01 — Windows Server 2025 |
+| IP adres | 192.168.50.10 |
 | Domein | lab.local |
-| NetBIOS naam | LAB |
-| Netwerk | VMware NAT — 192.168.100.0/24 |
+| NetBIOS | LAB |
+| DNS | 192.168.50.10 |
+| DHCP scope | 192.168.50.100 — 192.168.50.200 |
 
 ---
 
 ## Wat ik heb gedaan
 
-- VMware NAT netwerk geconfigureerd op 192.168.100.0/24
-- Windows Server 2025 VM aangemaakt en gekoppeld aan VMnet8
-- Statisch IP ingesteld op 192.168.100.10
-- Server hernoemd naar DC01
-- Active Directory Domain Services rol geinstalleerd
-- Active Directory forest aangemaakt — lab.local
-- DNS server geconfigureerd en getest
-- DHCP server geinstalleerd en scope aangemaakt
-- Windows 10 en Windows 11 clients gejoined aan het domein
-- 20 gebruikers aangemaakt in 5 afdelingen
-- 5 security groepen aangemaakt per afdeling
+- Windows Server 2025 geinstalleerd op DC01
+- Statisch IP adres ingesteld op 192.168.50.10
+- AD DS rol geinstalleerd via PowerShell
+- Nieuw forest aangemaakt — lab.local
+- DNS geconfigureerd als onderdeel van AD DS
+- DHCP rol geinstalleerd en geconfigureerd
+- DHCP scope aangemaakt voor 192.168.50.0/24
+- 5 Organizational Units aangemaakt per afdeling
+- 5 security groepen aangemaakt
+- 20 gebruikers aangemaakt verdeeld over 5 afdelingen
+- Windows 10 en Windows 11 clients gejoined aan domein
 
 ---
 
-## Resultaat
+## Gebruikers en groepen
 
-Na deze lab is de volgende infrastructuur operationeel:
+| Afdeling | Groep | Gebruikers |
+|---|---|---|
+| HR | HR-Groep | hr-user1 t/m hr-user4 |
+| IT | IT-Groep | it-user1 t/m it-user4 |
+| Management | Management-Groep | mgmt-user1 t/m mgmt-user4 |
+| Finance | Finance-Groep | fin-user1 t/m fin-user4 |
+| Sales | Sales-Groep | sales-user1 t/m sales-user4 |
 
-- Domain Controller DC01 op 192.168.100.10
-- Active Directory domein lab.local
-- DNS server — lab.local resolvet naar 192.168.100.10
-- DHCP scope 192.168.100.50 tot 192.168.100.150
-- Windows 10 client gejoined aan lab.local
-- Windows 11 client gejoined aan lab.local
-- 20 gebruikers verdeeld over HR, IT, Management, Finance en Sales
+Wachtwoord voor alle gebruikers: `Welkom@123`
 
 ---
 
-## Vaardigheden
+## DHCP configuratie
 
-- Active Directory Domain Services (AD DS)
-- DNS configuratie en beheer
-- DHCP server configuratie
-- Domain Controller setup
-- PowerShell voor server beheer
-- VMware netwerk configuratie
-- Windows Server 2025
+| Instelling | Waarde |
+|---|---|
+| Scope naam | Lab Scope |
+| Start adres | 192.168.50.100 |
+| Eind adres | 192.168.50.200 |
+| Gateway | 192.168.50.1 |
+| DNS server | 192.168.50.10 |
+| Domein | lab.local |
+
+---
+
+## Testresultaten
+
+| Test | Resultaat |
+|---|---|
+| AD DS geinstalleerd | Werkt |
+| DNS werkt correct | Werkt |
+| DHCP geeft IP uit | Werkt |
+| Windows 10 gejoined | Werkt |
+| Windows 11 gejoined | Werkt |
+| Gebruikers kunnen inloggen | Werkt |
+
+---
+
+## Wat ik heb geleerd
+
+- Hoe Active Directory Domain Services werkt
+- Hoe je een nieuw forest aanmaakt
+- Hoe DNS samenwerkt met Active Directory
+- Hoe je DHCP configureert voor een domein netwerk
+- Hoe je gebruikers en groepen beheert via PowerShell
+- Hoe je clients joined aan een domein
 
 ---
 
@@ -67,12 +92,8 @@ Zie de `screenshots/` map voor bewijs van elke stap.
 
 | Screenshot | Wat je ziet |
 |---|---|
-| 00-network-editor.png | VMware Virtual Network Editor |
-| 01-vmnet8-config.png | NAT netwerk instellingen |
-| 02-vm-adapter.png | VM gekoppeld aan VMnet8 |
-| 03-static-ip.png | Statisch IP ingesteld |
 | 04-adds-role.png | AD DS rol geinstalleerd |
-| 05-forest-install.png | Forest aangemaakt |
+| 05-forest-install.png | Forest lab.local aangemaakt |
 | 06-login-screen.png | Login met LAB\Administrator |
 | 07-addomain.png | Get-ADDomain output |
 | 08-aduc.png | Active Directory Users and Computers |
