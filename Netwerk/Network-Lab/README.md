@@ -87,17 +87,6 @@ INTERNET
 
 ---
 
-## Screenshots
-
-![Network Editor](../screenshots-archief/00-network-editor.png)
-![VMnet8 Configuratie](../screenshots-archief/01-vmnet8-config.png)
-![VM Adapter](../screenshots-archief/02-vm-adapter.png)
-![IP Test](../screenshots-archief/03-ip-test.png)
-![Static IP](../screenshots-archief/04-static-ip.png)
-![DNS Test](../screenshots-archief/05-dns-test.png)
-![Win11 Ipconfig](../screenshots-archief/32-win11-ipconfig.png)
-![Win11 Ping](../screenshots-archief/33-win11-ping.png)
-![Win11 DNS](../screenshots-archief/34-win11-dns.png)
 
 ## Screenshots
 
